@@ -1,0 +1,53 @@
+{
+  "name": "nutrilytics",
+  "version": "1.0.0",
+  "description": "Nutrilytics - Complete Anganwadi Monitoring System",
+  "main": "server.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "server": "node server.js",
+    "dev": "concurrently \"npm start\" \"npm run server\""
+  },
+  "keywords": [
+    "anganwadi",
+    "child-health",
+    "nutrition",
+    "monitoring"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "express": "^4.18.2",
+    "localforage": "^1.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.3",
+    "react-scripts": "^5.0.1",
+    "recharts": "^2.15.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:3001"
+}
