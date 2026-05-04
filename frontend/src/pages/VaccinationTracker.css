@@ -9,6 +9,14 @@
 .vaccination-header {
   border-bottom: 2px solid var(--color-border);
   padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.vaccination-header p {
+  color: var(--color-text-charcoal) !important;
+  opacity: 0.6;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .vaccination-content-grid {
@@ -166,13 +174,13 @@
 
 /* Sidebar */
 .summary-card {
-  background: linear-gradient(135deg, var(--color-teal), var(--color-teal-dark));
-  color: white;
+  background: linear-gradient(135deg, var(--color-teal), var(--color-teal-dark)) !important;
+  color: white !important;
   padding: 2.5rem;
   border-radius: 2.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(42, 157, 143, 0.3);
+  box-shadow: 0 10px 30px rgba(91, 89, 181, 0.2);
 }
 
 .summary-bg-icon {

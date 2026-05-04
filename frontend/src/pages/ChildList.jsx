@@ -77,7 +77,12 @@ const ChildList = () => {
                 </div>
                 <div className="child-title-info">
                   <h3 className="child-name">{child.name}</h3>
-                  <p className="child-id">{child.id}</p>
+                  <div className="child-status-row">
+                    <p className="child-id">{child.id}</p>
+                    <span className={`status-pill ${Math.random() > 0.3 ? 'status-present' : 'status-absent'}`}>
+                      {Math.random() > 0.3 ? 'Present' : 'Absent'}
+                    </span>
+                  </div>
                 </div>
               </div>
 

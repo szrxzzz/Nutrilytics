@@ -14,12 +14,38 @@ app = FastAPI(title="Nutrilytics API")
 # Load ML Model
 MODEL_PATH = "backend/app/ml/model.pkl"
 LR_MODEL_PATH = "backend/app/ml/lr_model.pkl"
+ATTENDANCE_MODEL_PATH = "backend/app/ml/attendance_model.pkl"
+VACCINE_MODEL_PATH = "backend/app/ml/vaccine_model.pkl"
+ANOMALY_MODEL_PATH = "backend/app/ml/anomaly_model.pkl"
+DEEP_MODEL_PATH = "backend/app/ml/deep_health_model.keras"
+
 model = None
 lr_model = None
+attendance_model = None
+vaccine_model = None
+anomaly_model = None
+deep_model = None
+
 if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)
 if os.path.exists(LR_MODEL_PATH):
     lr_model = joblib.load(LR_MODEL_PATH)
+if os.path.exists(ATTENDANCE_MODEL_PATH):
+    attendance_model = joblib.load(ATTENDANCE_MODEL_PATH)
+if os.path.exists(VACCINE_MODEL_PATH):
+    vaccine_model = joblib.load(VACCINE_MODEL_PATH)
+if os.path.exists(ANOMALY_MODEL_PATH):
+    anomaly_model = joblib.load(ANOMALY_MODEL_PATH)
+
+# Load TensorFlow/Keras model
+if os.path.exists(DEEP_MODEL_PATH):
+    try:
+        import tensorflow as tf
+        import numpy as np
+        deep_model = tf.keras.models.load_model(DEEP_MODEL_PATH)
+        print("Deep Health Model loaded successfully.")
+    except Exception as e:
+        print(f"Error loading Deep Health Model: {e}")
 
 # Configure CORS
 app.add_middleware(
@@ -258,6 +284,156 @@ def evaluate_rules(payload: dict, db: Session = Depends(get_db)):
         generated_alerts.append(alert)
     
     return {"alerts": [a.message for a in generated_alerts]}
+
+@app.post("/predict-attendance-risk")
+def predict_attendance_risk(payload: dict):
+    if not attendance_model:
+        return {"status": "error", "message": "Attendance model not loaded"}
+    
+    features = payload.get("features")
+    if not features:
+        return {"status": "error", "message": "No features provided"}
+    
+    df = pd.DataFrame([features])
+    prediction = int(attendance_model.predict(df)[0])
+    probs = attendance_model.predict_proba(df)[0]
+    confidence = float(max(probs))
+    
+    labels = ["Regular", "Irregular", "High Dropout Risk"]
+    return {
+        "status": "success",
+        "prediction": labels[prediction],
+        "confidence": f"{confidence:.2%}",
+        "recommendations": ["Incentivize attendance", "Home visit suggested"] if prediction > 0 else ["Continue monitoring"]
+    }
+
+@app.post("/predict-vaccine-default")
+def predict_vaccine_default(payload: dict):
+    if not vaccine_model:
+        return {"status": "error", "message": "Vaccine model not loaded"}
+    
+    features = payload.get("features")
+    if not features:
+        return {"status": "error", "message": "No features provided"}
+    
+    df = pd.DataFrame([features])
+    prediction = int(vaccine_model.predict(df)[0])
+    probs = vaccine_model.predict_proba(df)[0]
+    confidence = float(max(probs))
+    
+    labels = ["Likely to Complete", "Likely to Miss"]
+    return {
+        "status": "success",
+        "prediction": labels[prediction],
+        "confidence": f"{confidence:.2%}",
+        "recommendations": ["Call parent", "Schedule immediate session"] if prediction == 1 else ["Monitor next date"]
+    }
+
+@app.post("/detect-growth-anomaly")
+def detect_growth_anomaly(payload: dict):
+    if not anomaly_model:
+        return {"status": "error", "message": "Anomaly model not loaded"}
+    
+    features = payload.get("features")
+    if not features:
+        return {"status": "error", "message": "No features provided"}
+    
+    df = pd.DataFrame([features])
+    # IsolationForest returns -1 for anomaly, 1 for normal
+    prediction = int(anomaly_model.predict(df)[0])
+    
+    return {
+        "status": "success",
+        "prediction": "Anomaly Detected" if prediction == -1 else "Normal",
+        "confidence": "N/A",
+        "recommendations": ["Verify data entry", "Re-measure child"] if prediction == -1 else ["Data consistent"]
+    }
+
+@app.post("/nutrition-recommendation")
+def nutrition_recommendation(payload: dict):
+    risk_level = payload.get("risk_level", "Low Risk")
+    muac = payload.get("muac", 13.5)
+    age = payload.get("age_months", 24)
+    
+    recommendations = []
+    
+    # ML Prediction-based
+    if risk_level == "High Risk":
+        recommendations.append("Immediate referral to NRC (Nutrition Rehabilitation Centre)")
+        recommendations.append("Double dose of RUTF (Ready-to-Use Therapeutic Food)")
+    elif risk_level == "Medium Risk":
+        recommendations.append("Supplementary feeding program enrollment")
+        recommendations.append("Fortified food supplements provided daily")
+    
+    # Rule-based logic
+    if muac < 11.5:
+        recommendations.append("CRITICAL: Severe Acute Malnutrition (SAM) protocol initiated")
+    elif muac < 12.5:
+        recommendations.append("Moderate Acute Malnutrition (MAM) monitoring")
+        
+    if age < 6:
+        recommendations.append("Exclusive breastfeeding advocacy")
+    elif age < 24:
+        recommendations.append("Complementary feeding with high protein-energy content")
+        
+    return {
+        "status": "success",
+        "prediction": risk_level,
+        "recommendations": recommendations
+    }
+
+@app.post("/predict-deep-health-risk")
+def predict_deep_health_risk(payload: dict):
+    if not deep_model:
+        return {
+            "status": "error", 
+            "message": "Deep Health Model (TensorFlow/Keras) not loaded. Please ensure tensorflow is installed and model is trained."
+        }
+    
+    features = payload.get("features")
+    if not features:
+        return {"status": "error", "message": "No features provided"}
+    
+    try:
+        import numpy as np
+        # Ensure correct order of features for the neural network
+        feat_list = [
+            features.get('age_months', 0),
+            features.get('gender', 0),
+            features.get('weight', 0),
+            features.get('height', 0),
+            features.get('muac', 0),
+            features.get('bmi', 0),
+            features.get('weight_delta', 0),
+            features.get('height_delta', 0),
+            features.get('attendance_percentage', 0),
+            features.get('missed_vaccines', 0),
+            features.get('parent_engagement_score', 0),
+            features.get('previous_risk_score', 0)
+        ]
+        
+        input_data = np.array([feat_list])
+        prediction_probs = deep_model.predict(input_data)
+        prediction_idx = np.argmax(prediction_probs[0])
+        confidence = float(prediction_probs[0][prediction_idx])
+        
+        labels = ["Low Risk", "Medium Risk", "High Risk"]
+        
+        recommendations = []
+        if labels[prediction_idx] == "High Risk":
+            recommendations = ["Immediate clinical audit", "Intensive nutrition intervention"]
+        elif labels[prediction_idx] == "Medium Risk":
+            recommendations = ["Bi-weekly monitoring", "Parent counseling"]
+            
+        return {
+            "status": "success",
+            "model": "TensorFlow/Keras Neural Network",
+            "prediction": labels[prediction_idx],
+            "confidence": round(confidence, 2),
+            "recommendations": recommendations
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 @app.get("/alerts")
 def get_alerts(db: Session = Depends(get_db)):

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Activity, Calendar, ShieldCheck, AlertCircle, RefreshCcw, User, Phone, MapPin, Milestone, ChevronRight, CheckCircle2 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import './ChildProfile.css';
+import AIInsightsPanel from '../components/AIInsightsPanel';
+import { useSync } from '../context/SyncContext';
 
 const ChildProfile = () => {
   const { id } = useParams();
@@ -13,6 +15,15 @@ const ChildProfile = () => {
   const [forecastData, setForecastData] = useState(null);
   const [ruleAlerts, setRuleAlerts] = useState([]);
   const [predicting, setPredicting] = useState(false);
+  const { isOnline } = useSync();
+  const [extendedAI, setExtendedAI] = useState({
+    attendance: "Normal",
+    vaccine: "On Track",
+    anomaly: "Consistent",
+    deepRisk: "Calculating...",
+    deepConfidence: 0,
+    recommendations: []
+  });
 
   useEffect(() => {
     fetchData();
@@ -33,14 +44,80 @@ const ChildProfile = () => {
   const runPrediction = async () => {
     setPredicting(true);
     try {
+      // 1. Basic Risk Prediction
       const resp = await axios.post(`http://localhost:8000/predict-risk`, { child_id: id });
       setRiskData(resp.data);
       
+      // 2. Growth Forecast
       const forecastResp = await axios.post(`http://localhost:8000/forecast-growth`, { child_id: id });
       setForecastData(forecastResp.data);
 
+      // 3. Rule Based
       const rulesResp = await axios.post(`http://localhost:8000/evaluate-rules`, { child_id: id });
       setRuleAlerts(rulesResp.data.alerts);
+
+      // 4. Extended AI Features
+      const feat = resp.data.features;
+      
+      const attendanceResp = await axios.post(`http://localhost:8000/predict-attendance-risk`, {
+        features: {
+          attendance_pct: feat.attendance_pct,
+          past_absence: 100 - feat.attendance_pct,
+          age_months: feat.age_months,
+          risk_level: resp.data.risk_label === "High Risk" ? 2 : (resp.data.risk_label === "Medium Risk" ? 1 : 0)
+        }
+      });
+
+      const vaccineResp = await axios.post(`http://localhost:8000/predict-vaccine-default`, {
+        features: {
+          missed_vaccines: feat.missed_vaccines,
+          attendance_pct: feat.attendance_pct,
+          parent_engagement: 8 // Mock engagement score
+        }
+      });
+
+      const anomalyResp = await axios.post(`http://localhost:8000/detect-growth-anomaly`, {
+        features: {
+          age_months: feat.age_months,
+          weight: feat.weight,
+          height: feat.height,
+          weight_delta: feat.weight_delta,
+          height_delta: feat.height_delta
+        }
+      });
+
+      const deepResp = await axios.post(`http://localhost:8000/predict-deep-health-risk`, {
+        features: {
+          age_months: feat.age_months,
+          gender: feat.gender,
+          weight: feat.weight,
+          height: feat.height,
+          muac: feat.muac,
+          bmi: feat.bmi,
+          weight_delta: feat.weight_delta,
+          height_delta: feat.height_delta,
+          attendance_percentage: feat.attendance_pct,
+          missed_vaccines: feat.missed_vaccines,
+          parent_engagement_score: 8,
+          previous_risk_score: resp.data.risk_label === "High Risk" ? 2 : (resp.data.risk_label === "Medium Risk" ? 1 : 0)
+        }
+      });
+
+      const recResp = await axios.post(`http://localhost:8000/nutrition-recommendation`, {
+        risk_level: resp.data.risk_label,
+        muac: feat.muac,
+        age_months: feat.age_months
+      });
+
+      setExtendedAI({
+        attendance: attendanceResp.data.prediction,
+        vaccine: vaccineResp.data.prediction,
+        anomaly: anomalyResp.data.prediction,
+        deepRisk: deepResp.data.status === "success" ? deepResp.data.prediction : "Unavailable",
+        deepConfidence: deepResp.data.status === "success" ? deepResp.data.confidence : 0,
+        recommendations: [...recResp.data.recommendations, ...(deepResp.data.recommendations || [])]
+      });
+
     } catch (err) {
       console.error("Prediction failed", err);
     } finally {
@@ -85,33 +162,16 @@ const ChildProfile = () => {
           </button>
         </div>
 
-        <div className={`poshan-card ai-risk-card ${
-          riskData?.risk_label === 'High Risk' ? 'risk-high' : 
-          riskData?.risk_label === 'Medium Risk' ? 'risk-medium' : 
-          'risk-low'
-        }`}>
-          <div className="ai-risk-content">
-            <p className="risk-eyebrow">ML Prediction Output</p>
-            <h3 className="risk-title">
-              {predicting ? "Calculating..." : (riskData?.risk_label || "No active risk")}
-            </h3>
-            
-            <div className="confidence-meter-container">
-              <p className="confidence-label">Confidence Score</p>
-              <div className="confidence-meter-row">
-                <span className="confidence-value">{predicting ? "--" : (riskData?.risk_score ? (riskData.risk_score * 100).toFixed(0) + '%' : '0%')}</span>
-                <div className="confidence-bar-bg">
-                  <div className="confidence-bar-fill" style={{ width: predicting ? '0%' : (riskData?.risk_score * 100) + '%' }}></div>
-                </div>
-              </div>
-            </div>
-
-            <div className="risk-recommendation">
-              <InfoCircle className="info-icon" />
-              <p className="recommendation-text">{riskData?.recommendation || "Maintain regular health checkups every month."}</p>
-            </div>
-          </div>
-        </div>
+        <AIInsightsPanel 
+          dropoutRisk={extendedAI.attendance}
+          vaccineRisk={extendedAI.vaccine}
+          growthAnomaly={extendedAI.anomaly}
+          deepRisk={extendedAI.deepRisk}
+          deepConfidence={extendedAI.deepConfidence}
+          recommendations={extendedAI.recommendations}
+          loading={predicting}
+          isOnline={isOnline}
+        />
       </div>
 
       <div className="profile-content-grid">
@@ -193,15 +253,30 @@ const ChildProfile = () => {
                 {month: 'Mar', weight: 12.4},
                 {month: 'Apr', weight: 12.6},
                 {month: 'May', weight: 12.4},
-                {month: 'Jun', weight: riskData?.features?.weight || 12.5}
+                {month: 'Jun', weight: riskData?.features?.weight || 12.5},
+                {month: 'Jul (Forecast)', weight: forecastData?.expected_weight, isForecast: true}
               ]}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill: 'var(--color-text-muted)', fontSize: 12, fontFamily: 'var(--font-secondary)'}} dy={10} />
-                <YAxis hide domain={[10, 15]} />
+                <YAxis hide domain={[10, 16]} />
                 <Tooltip 
                   contentStyle={{borderRadius: 'var(--radius-md)', border: 'none', boxShadow: 'var(--shadow-sm)', fontFamily: 'var(--font-primary)'}}
                 />
-                <Line type="monotone" dataKey="weight" stroke="var(--color-orange)" strokeWidth={4} dot={{r: 5, fill: 'var(--color-orange)'}} />
+                <Line 
+                  type="monotone" 
+                  dataKey="weight" 
+                  stroke="var(--color-teal)" 
+                  strokeWidth={4} 
+                  dot={(props) => {
+                    const { cx, cy, payload } = props;
+                    if (payload.isForecast) return <circle cx={cx} cy={cy} r={6} fill="var(--color-orange)" stroke="#fff" strokeWidth={2} />;
+                    return <circle cx={cx} cy={cy} r={5} fill="var(--color-teal)" />;
+                  }}
+                  strokeDasharray={(payload) => payload?.isForecast ? "5 5" : "0"}
+                />
+                {forecastData && (
+                  <ReferenceArea x1="Jun" x2="Jul (Forecast)" fill="var(--color-primary-light)" fillOpacity={0.3} />
+                )}
               </LineChart>
             </ResponsiveContainer>
           </div>

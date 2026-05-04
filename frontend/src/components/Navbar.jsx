@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSync } from '../context/SyncContext';
-import { Wifi, WifiOff, RefreshCw, CheckCircle2, Bell } from 'lucide-react';
+import { Wifi, WifiOff, RefreshCw, CheckCircle2, Bell, Brain } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = ({ user }) => {
@@ -18,7 +18,7 @@ const Navbar = ({ user }) => {
         <div className="sync-indicators">
           {isOnline ? (
             <span className="sync-badge badge-online">
-              <Wifi size={14} /> Online
+              <Wifi size={14} /> <Brain size={14} style={{marginLeft: '4px'}} /> AI Online
             </span>
           ) : (
             <span className="sync-badge badge-offline">
