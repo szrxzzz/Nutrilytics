@@ -7,10 +7,6 @@ const VaccinationTracker = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchVaccinations();
-  }, []);
-
   const fetchVaccinations = async () => {
     try {
       const resp = await axios.get('http://localhost:8000/children');
@@ -42,6 +38,10 @@ const VaccinationTracker = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchVaccinations();
+  }, []);
 
   const handleGenerateCSV = () => {
     const headers = ['Child Name', 'Child ID', 'Vaccine', 'Due Date', 'Status'];
