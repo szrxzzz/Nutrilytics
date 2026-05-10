@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Syringe, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 import './VaccinationTracker.css';
@@ -7,7 +7,7 @@ const VaccinationTracker = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchVaccinations = async () => {
+  const fetchVaccinations = useCallback(async () => {
     try {
       const resp = await axios.get('http://localhost:8000/children');
       const mockVaccines = [];
@@ -37,11 +37,11 @@ const VaccinationTracker = () => {
       console.error(err);
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchVaccinations();
-  }, []);
+  }, [fetchVaccinations]);
 
   const handleGenerateCSV = () => {
     const headers = ['Child Name', 'Child ID', 'Vaccine', 'Due Date', 'Status'];
