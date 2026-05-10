@@ -1,0 +1,222 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-teal-dark);
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-teal);
+  border-radius: 50%;
+}
+
+.date-btn {
+  background-color: white;
+  padding: 0.5rem 1.25rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-charcoal);
+  line-height: 1;
+}
+
+.stat-subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-secondary);
+}
+
+.stat-icon-wrapper {
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card Types */
+.stat-primary { border-left-color: var(--color-teal); }
+.stat-primary .stat-icon-wrapper { background-color: rgba(42, 157, 143, 0.1); color: var(--color-teal); }
+
+.stat-danger { border-left-color: var(--color-danger); }
+.stat-danger .stat-icon-wrapper { background-color: rgba(230, 57, 70, 0.1); color: var(--color-danger); }
+
+.stat-warning { border-left-color: var(--color-orange); }
+.stat-warning .stat-icon-wrapper { background-color: rgba(244, 162, 97, 0.1); color: var(--color-orange); }
+
+.stat-success { border-left-color: var(--color-sage); }
+.stat-success .stat-icon-wrapper { background-color: rgba(132, 169, 140, 0.1); color: var(--color-sage); }
+
+.stat-neutral { border-left-color: var(--color-text-muted); }
+.stat-neutral .stat-icon-wrapper { background-color: rgba(100, 116, 139, 0.1); color: var(--color-text-muted); }
+
+/* Charts */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.chart-card {
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-header.border-bottom {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+}
+
+.chart-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-teal);
+  background-color: rgba(42, 157, 143, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+}
+
+.chart-body {
+  flex: 1;
+  min-height: 0;
+}
+
+.pie-chart-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.pie-container {
+  flex: 1;
+  min-height: 200px;
+}
+
+.pie-legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: var(--color-bg-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.legend-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.legend-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text-charcoal);
+}
+
+.page-transition {
+  animation: fadeIn 0.4s ease-out;
+}

@@ -1,0 +1,189 @@
+.reports-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.reports-header {
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 1.5rem;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.report-card {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.report-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.report-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  transition: color 0.4s ease;
+}
+
+.report-desc {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  line-height: 1.6;
+  flex: 1;
+  transition: color 0.4s ease;
+}
+
+.report-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-top: 1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  margin-top: auto;
+}
+
+/* Primary Report Styling */
+.primary-report {
+  border-color: rgba(42, 157, 143, 0.2);
+}
+
+.primary-report .report-icon-wrapper {
+  background-color: rgba(42, 157, 143, 0.1);
+  color: var(--color-teal);
+}
+
+.primary-report .report-title {
+  color: var(--color-text-charcoal);
+}
+
+.primary-report .report-download-btn {
+  color: var(--color-teal);
+}
+
+.primary-report:hover {
+  background-color: var(--color-teal);
+  border-color: var(--color-teal);
+}
+
+.primary-report:hover .report-icon-wrapper {
+  background-color: white;
+}
+
+.primary-report:hover .report-title,
+.primary-report:hover .report-desc,
+.primary-report:hover .report-download-btn {
+  color: white;
+}
+
+/* Secondary Report Styling */
+.secondary-report {
+  border-color: rgba(244, 162, 97, 0.2);
+}
+
+.secondary-report .report-icon-wrapper {
+  background-color: rgba(244, 162, 97, 0.1);
+  color: var(--color-orange);
+}
+
+.secondary-report .report-download-btn {
+  color: var(--color-orange);
+}
+
+.secondary-report:hover {
+  background-color: var(--color-orange);
+  border-color: var(--color-orange);
+}
+
+.secondary-report:hover .report-icon-wrapper {
+  background-color: white;
+}
+
+.secondary-report:hover .report-title,
+.secondary-report:hover .report-desc,
+.secondary-report:hover .report-download-btn {
+  color: white;
+}
+
+/* Tertiary Report Styling */
+.tertiary-report {
+  border-color: rgba(43, 58, 66, 0.2);
+}
+
+.tertiary-report .report-icon-wrapper {
+  background-color: rgba(43, 58, 66, 0.1);
+  color: var(--color-text-charcoal);
+}
+
+.tertiary-report .report-download-btn {
+  color: var(--color-text-charcoal);
+}
+
+.tertiary-report:hover {
+  background-color: var(--color-text-charcoal);
+  border-color: var(--color-text-charcoal);
+}
+
+.tertiary-report:hover .report-icon-wrapper {
+  background-color: white;
+}
+
+.tertiary-report:hover .report-title,
+.tertiary-report:hover .report-desc,
+.tertiary-report:hover .report-download-btn {
+  color: white;
+}
+
+/* Coming Soon Styling */
+.coming-soon-report {
+  border: 2px dashed var(--color-border);
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0.6;
+}
+
+.coming-soon-report:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.coming-soon-report .report-icon-wrapper {
+  background-color: var(--color-bg-cream);
+  color: var(--color-text-muted);
+}
+
+.coming-soon-report .report-title {
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
+}

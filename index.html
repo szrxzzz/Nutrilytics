@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrilytics - Smarter Child Health Monitoring for Every Anganwadi Centre</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Nutrilytics</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="trust-badges">
+                        <span class="badge"><i class="fas fa-wifi-slash"></i> Offline First</span>
+                        <span class="badge"><i class="fas fa-brain"></i> AI Powered</span>
+                        <span class="badge"><i class="fas fa-mountain"></i> Rural Ready</span>
+                        <span class="badge"><i class="fas fa-check-circle"></i> ICDS Aligned</span>
+                    </div>
+                    <h1>Smarter Child Health Monitoring for Every Anganwadi Centre</h1>
+                    <p class="hero-subtitle">An offline-first AI-powered platform helping Anganwadi workers track growth, attendance, nutrition, and vaccination risks in real time.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary">View Product</button>
+                        <button class="btn btn-secondary">See How It Works</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="dashboard-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span class="mockup-title">Nutrilytics Dashboard</span>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="stat-card">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <h3>1,247</h3>
+                                    <p>Total Children</p>
+                                </div>
+                            </div>
+                            <div class="stat-card alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div>
+                                    <h3>23</h3>
+                                    <p>At Risk</p>
+                                </div>
+                            </div>
+                            <div class="stat-card success">
+                                <i class="fas fa-syringe"></i>
+                                <div>
+                                    <h3>98%</h3>
+                                    <p>Vaccination Rate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <h2 class="section-title">Why This Matters</h2>
+            <p class="section-subtitle">Critical challenges in rural child health monitoring</p>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Manual Record Keeping</h3>
+                    <p>Paper-based systems lead to errors, data loss, and inefficient tracking</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Delayed Risk Detection</h3>
+                    <p>Malnutrition and growth issues identified too late for effective intervention</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-syringe"></i>
+                    <h3>Missed Vaccinations</h3>
+                    <p>No automated reminders result in incomplete immunization schedules</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-calendar-times"></i>
+                    <h3>Attendance Gaps</h3>
+                    <p>Irregular attendance goes unnoticed without systematic monitoring</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-user-slash"></i>
+                    <h3>Poor Parent Engagement</h3>
+                    <p>Limited communication channels between workers and parents</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-eye-slash"></i>
+                    <h3>Low Visibility</h3>
+                    <p>Authorities lack real-time insights into program effectiveness</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <div class="container">
+            <h2 class="section-title">One Smart System for Child Monitoring</h2>
+            <p class="section-subtitle">Nutrilytics is a hybrid offline-first monitoring platform designed for Anganwadi centres</p>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Register Children</h3>
+                    <p>Quick digital enrollment with complete health profiles</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Record Growth Data</h3>
+                    <p>Track weight, height, and development milestones over time</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3>Mark Attendance</h3>
+                    <p>Digital attendance tracking with pattern analysis</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-shield-virus"></i>
+                    </div>
+                    <h3>Track Vaccination Status</h3>
+                    <p>Automated reminders and immunization schedule management</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Receive AI-Based Risk Alerts</h3>
+                    <p>Intelligent early warning system for health concerns</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Notify Parents</h3>
+                    <p>Automated SMS alerts keep parents informed and engaged</p>
+                </div>
+                <div class="solution-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Sync Reports When Online</h3>
+                    <p>Seamless cloud synchronization for centralized monitoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">A seamless flow from data entry to actionable insights</p>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <i class="fas fa-keyboard"></i>
+                    <h3>Child Data Entry</h3>
+                    <p>Workers input health metrics through an intuitive mobile interface</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <i class="fas fa-database"></i>
+                    <h3>Local Device Storage</h3>
+                    <p>Data stored securely on device, works without internet</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <i class="fas fa-brain"></i>
+                    <h3>On-Device AI Analysis</h3>
+                    <p>Lightweight AI processes data locally for instant insights</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Risk Scoring & Alerts</h3>
+                    <p>AI identifies at-risk children and generates alerts</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <i class="fas fa-comment-dots"></i>
+                    <h3>Parent Notifications</h3>
+                    <p>Automated SMS sent to parents for timely action</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <i class="fas fa-sync"></i>
+                    <h3>Cloud Sync for Monitoring</h3>
+                    <p>Data synced when online for supervisor oversight</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Product Features</h2>
+            <p class="section-subtitle">Comprehensive tools for effective child health management</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-id-card"></i>
+                    <h3>Child Registration</h3>
+                    <p>Complete digital profiles with health history and family details</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-weight"></i>
+                    <h3>Growth Monitoring</h3>
+                    <p>Track weight, height, BMI with WHO growth standards comparison</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Nutrition Risk Detection</h3>
+                    <p>AI-powered identification of malnutrition and growth faltering</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Attendance Tracking</h3>
+                    <p>Digital attendance with pattern analysis and alerts</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-syringe"></i>
+                    <h3>Vaccination Tracking</h3>
+                    <p>Complete immunization schedule management with reminders</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI Alerts</h3>
+                    <p>Intelligent early warning system for health risks</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sms"></i>
+                    <h3>Parent Notifications</h3>
+                    <p>Automated SMS alerts in local language</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wifi-slash"></i>
+                    <h3>Offline Data Storage</h3>
+                    <p>Full functionality without internet connectivity</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cloud"></i>
+                    <h3>Cloud Sync</h3>
+                    <p>Automatic synchronization when connection available</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Supervisor Reports</h3>
+                    <p>Real-time dashboards and analytics for authorities</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Engine Section -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="ai-content">
+                <div class="ai-text">
+                    <h2>AI That Works Where Internet Doesn't</h2>
+                    <div class="ai-features">
+                        <div class="ai-feature">
+                            <i class="fas fa-microchip"></i>
+                            <div>
+                                <h4>Lightweight AI runs on-device</h4>
+                                <p>Optimized models work on basic smartphones without cloud dependency</p>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <i class="fas fa-heartbeat"></i>
+                            <div>
+                                <h4>Detects growth risks</h4>
+                                <p>Identifies malnutrition patterns and growth faltering early</p>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Tracks attendance anomalies</h4>
+                                <p>Flags irregular patterns that may indicate underlying issues</p>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <i class="fas fa-calendar-times"></i>
+                            <div>
+                                <h4>Flags missed vaccination patterns</h4>
+                                <p>Predicts and prevents immunization schedule gaps</p>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <i class="fas fa-mountain"></i>
+                            <div>
+                                <h4>Works offline in rural areas</h4>
+                                <p>Full AI capabilities without internet connectivity</p>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <i class="fas fa-compress-alt"></i>
+                            <div>
+                                <h4>Syncs only summarized reports</h4>
+                                <p>Reduces server load and bandwidth requirements</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-visual">
+                    <div class="ai-brain">
+                        <i class="fas fa-brain"></i>
+                        <div class="pulse-ring"></div>
+                        <div class="pulse-ring delay-1"></div>
+                        <div class="pulse-ring delay-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Personas Section -->
+    <section class="personas-section">
+        <div class="container">
+            <h2 class="section-title">Built for Frontline Care</h2>
+            <p class="section-subtitle">Designed with real users in mind</p>
+            <div class="personas-grid">
+                <div class="persona-card">
+                    <div class="persona-icon">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <h3>Anganwadi Worker</h3>
+                    <div class="persona-detail">
+                        <strong>Role:</strong>
+                        <p>Frontline health worker managing 40-80 children daily</p>
+                    </div>
+                    <div class="persona-detail">
+                        <strong>Pain Point:</strong>
+                        <p>Overwhelmed by manual paperwork, missing critical health indicators</p>
+                    </div>
+                    <div class="persona-detail">
+                        <strong>What They Gain:</strong>
+                        <p>Simplified data entry, automated alerts, more time for actual care</p>
+                    </div>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Parent</h3>
+                    <div class="persona-detail">
+                        <strong>Role:</strong>
+                        <p>Primary caregiver concerned about child's health and development</p>
+                    </div>
+                    <div class="persona-detail">
+                        <strong>Pain Point:</strong>
+                        <p>Limited awareness of child's health status, missed appointments</p>
+                    </div>
+                    <div class="persona-detail">
+                        <strong>What They Gain:</strong>
+                        <p>Timely SMS alerts, vaccination reminders, peace of mind</p>
+                    </div>
+                </div>
+                <div class="persona-card">
+                    <div class="persona-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Supervisor / Government Authority</h3>
+                    <div class="persona-detail">
+                        <strong>Role:</strong>
+                        <p>District coordinator overseeing multiple Anganwadi centres</p>
+                    </div>
+                    <div class="persona-detail">
+                        <strong>Pain Point:</strong>
+                        <p>No real-time visibility, delayed reports, difficult to identify issues</p>
+                    </div>
+                    <div class="persona-detail">
+                        <strong>What They Gain:</strong>
+                        <p>Live dashboards, data-driven insights, better resource allocation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title">Real-Time Insights Dashboard</h2>
+            <p class="section-subtitle">Comprehensive analytics at your fingertips</p>
+            <div class="dashboard-preview">
+                <div class="dashboard-stats">
+                    <div class="stat-box">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="1247">0</h3>
+                            <p>Total Children</p>
+                        </div>
+                    </div>
+                    <div class="stat-box alert-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="23">0</h3>
+                            <p>At-Risk Children</p>
+                        </div>
+                    </div>
+                    <div class="stat-box warning-box">
+                        <i class="fas fa-syringe"></i>
+                        <div class="stat-info">
+                            <h3 class="counter" data-target="12">0</h3>
+                            <p>Vaccination Due</p>
+                        </div>
+                    </div>
+                    <div class="stat-box success-box">
+                        <i class="fas fa-percentage"></i>
+                        <div class="stat-info">
+                            <h3><span class="counter" data-target="94">0</span>%</h3>
+                            <p>Attendance Rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-charts">
+                    <div class="chart-card">
+                        <h4>Growth Monitoring Trends</h4>
+                        <div class="chart-placeholder">
+                            <div class="bar" style="height: 60%"></div>
+                            <div class="bar" style="height: 75%"></div>
+                            <div class="bar" style="height: 85%"></div>
+                            <div class="bar" style="height: 70%"></div>
+                            <div class="bar" style="height: 90%"></div>
+                            <div class="bar" style="height: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h4>Risk Distribution</h4>
+                        <div class="risk-distribution">
+                            <div class="risk-item">
+                                <span class="risk-label">Normal</span>
+                                <div class="risk-bar">
+                                    <div class="risk-fill success" style="width: 85%"></div>
+                                </div>
+                                <span class="risk-value">85%</span>
+                            </div>
+                            <div class="risk-item">
+                                <span class="risk-label">Moderate</span>
+                                <div class="risk-bar">
+                                    <div class="risk-fill warning" style="width: 12%"></div>
+                                </div>
+                                <span class="risk-value">12%</span>
+                            </div>
+                            <div class="risk-item">
+                                <span class="risk-label">High Risk</span>
+                                <div class="risk-bar">
+                                    <div class="risk-fill alert" style="width: 3%"></div>
+                                </div>
+                                <span class="risk-value">3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-summary">
+                    <h4><i class="fas fa-bell"></i> Recent Notifications</h4>
+                    <div class="notification-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>5 children require immediate nutrition assessment</p>
+                    </div>
+                    <div class="notification-item">
+                        <i class="fas fa-syringe"></i>
+                        <p>12 vaccination reminders sent to parents today</p>
+                    </div>
+                    <div class="notification-item">
+                        <i class="fas fa-sync"></i>
+                        <p>Data synced successfully - 47 records updated</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parent Notification Section -->
+    <section class="notification-section">
+        <div class="container">
+            <h2 class="section-title">Keeping Parents in the Loop</h2>
+            <p class="section-subtitle">Timely alerts for better engagement and follow-up care</p>
+            <div class="notification-content">
+                <div class="notification-preview">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="sms-message">
+                                <i class="fas fa-syringe"></i>
+                                <p>Your child's vaccination is due tomorrow at the Anganwadi centre. Please ensure attendance.</p>
+                                <span class="sms-time">Today, 10:30 AM</span>
+                            </div>
+                            <div class="sms-message">
+                                <i class="fas fa-heartbeat"></i>
+                                <p>Growth monitoring indicates a nutrition check is recommended. Please visit the centre for follow-up.</p>
+                                <span class="sms-time">Yesterday, 2:15 PM</span>
+                            </div>
+                            <div class="sms-message">
+                                <i class="fas fa-calendar-check"></i>
+                                <p>Your child has been absent for 3 consecutive days. Please contact the Anganwadi worker.</p>
+                                <span class="sms-time">2 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-clock"></i>
+                        <h4>Timely Alerts</h4>
+                        <p>Parents receive notifications at the right time for vaccinations, check-ups, and follow-ups</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Stronger Engagement</h4>
+                        <p>Regular communication builds trust and keeps parents actively involved in child's health</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-double"></i>
+                        <h4>Better Follow-up Care</h4>
+                        <p>Automated reminders ensure no critical health intervention is missed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="impact-section">
+        <div class="container">
+            <h2 class="section-title">Why Nutrilytics Can Transform Rural Child Care</h2>
+            <p class="section-subtitle">Measurable impact on child health outcomes</p>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <h3>Earlier Risk Detection</h3>
+                    <p>AI identifies malnutrition and health risks weeks earlier than manual methods</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Better Vaccination Compliance</h3>
+                    <p>Automated reminders increase immunization completion rates by 30%+</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Reduced Manual Burden</h3>
+                    <p>Workers save 2-3 hours daily on paperwork, focus more on care</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>Improved Parent Engagement</h3>
+                    <p>SMS notifications increase parent participation and follow-through</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Better Government Visibility</h3>
+                    <p>Real-time dashboards enable data-driven policy and resource decisions</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <h3>Scalable Across Centres</h3>
+                    <p>Cloud-based architecture supports thousands of Anganwadi centres</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scalability Section -->
+    <section class="scalability-section">
+        <div class="container">
+            <h2 class="section-title">Designed for India's Public Health Ecosystem</h2>
+            <p class="section-subtitle">Built to scale across the nation's Anganwadi network</p>
+            <div class="scalability-grid">
+                <div class="scalability-card">
+                    <i class="fas fa-mountain"></i>
+                    <h3>Rural Ready</h3>
+                    <p>Optimized for low-bandwidth, intermittent connectivity environments</p>
+                </div>
+                <div class="scalability-card">
+                    <i class="fas fa-wifi-slash"></i>
+                    <h3>Low Internet Dependency</h3>
+                    <p>Full offline functionality ensures uninterrupted service</p>
+                </div>
+                <div class="scalability-card">
+                    <i class="fas fa-rupee-sign"></i>
+                    <h3>Cost Efficient</h3>
+                    <p>Minimal infrastructure requirements, works on basic smartphones</p>
+                </div>
+                <div class="scalability-card">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Scalable Architecture</h3>
+                    <p>Cloud infrastructure supports 1.3 million+ Anganwadi centres</p>
+                </div>
+                <div class="scalability-card">
+                    <i class="fas fa-building"></i>
+                    <h3>ICDS Ecosystem Compatible</h3>
+                    <p>Aligns with Integrated Child Development Services framework</p>
+                </div>
+                <div class="scalability-card">
+                    <i class="fas fa-user-check"></i>
+                    <h3>Easy Adoption</h3>
+                    <p>Intuitive interface designed for workers with varying tech literacy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision-section">
+        <div class="container">
+            <div class="vision-content">
+                <h2>Our Vision</h2>
+                <p>We aim to strengthen early childhood monitoring through accessible, intelligent, and inclusive technology. Our mission is to empower frontline workers and improve child development outcomes through timely data-driven intervention.</p>
+                <p>Nutrilytics represents more than just a technology solution—it's a commitment to ensuring every child in India receives the nutrition and healthcare they deserve, regardless of geographic or economic barriers.</p>
+                <button class="btn btn-primary">Request Pilot Program</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Interested in bringing Nutrilytics to your district?</p>
+            <div class="contact-content">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Organization / District">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Connect With Us</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@nutrilytics.org</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 [phone_number]</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>[address]</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-heartbeat"></i> Nutrilytics</h3>
+                    <p>Hybrid AI-Powered Anganwadi Monitoring System</p>
+                    <p class="footer-tagline">Built for social impact and rural health innovation</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#vision">Vision</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nutrilytics. All rights reserved. Built with care for India's children.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
