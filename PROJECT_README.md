@@ -40,6 +40,7 @@ npm install
 ```bash
 node server.js
 ```
+
 Backend runs on `http://localhost:3001`
 
 1. Start the React frontend (in a new terminal):
@@ -47,6 +48,7 @@ Backend runs on `http://localhost:3001`
 ```bash
 npm start
 ```
+
 Frontend runs on `http://localhost:3000`
 
 1. Open your browser and navigate to `http://localhost:3000`
