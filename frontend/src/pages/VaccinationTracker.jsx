@@ -7,41 +7,50 @@ const VaccinationTracker = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchVaccinations = useCallback(async () => {
-    try {
-      const resp = await axios.get('http://localhost:8000/children');
-      const mockVaccines = [];
-      resp.data.forEach(child => {
-        mockVaccines.push({
-          id: `v-${child.id}`,
-          childName: child.name,
-          childId: child.id,
-          vaccine: 'BCG',
-          dueDate: '2024-05-10',
-          status: Math.random() > 0.3 ? 'completed' : 'due',
-          overdue: Math.random() > 0.8
-        });
-        mockVaccines.push({
-          id: `v2-${child.id}`,
-          childName: child.name,
-          childId: child.id,
-          vaccine: 'OPV-1',
-          dueDate: '2024-06-15',
-          status: 'due',
-          overdue: false
-        });
-      });
-      setRecords(mockVaccines);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchVaccinations();
-  }, [fetchVaccinations]);
+    let isMounted = true;
+
+    const loadData = async () => {
+      try {
+        const resp = await axios.get('http://localhost:8000/children');
+        const mockVaccines = [];
+        resp.data.forEach(child => {
+          mockVaccines.push({
+            id: `v-${child.id}`,
+            childName: child.name,
+            childId: child.id,
+            vaccine: 'BCG',
+            dueDate: '2024-05-10',
+            status: Math.random() > 0.3 ? 'completed' : 'due',
+            overdue: Math.random() > 0.8
+          });
+          mockVaccines.push({
+            id: `v2-${child.id}`,
+            childName: child.name,
+            childId: child.id,
+            vaccine: 'OPV-1',
+            dueDate: '2024-06-15',
+            status: 'due',
+            overdue: false
+          });
+        });
+
+        if (isMounted) {
+          setRecords(mockVaccines);
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error(err);
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleGenerateCSV = () => {
     const headers = ['Child Name', 'Child ID', 'Vaccine', 'Due Date', 'Status'];
