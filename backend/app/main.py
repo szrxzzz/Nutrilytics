@@ -375,6 +375,21 @@ def nutrition_recommendation(payload: dict):
         recommendations.append("Supplementary feeding program enrollment")
         recommendations.append("Fortified food supplements provided daily")
     
+    # Clinical Overrides (Safety Layer)
+    # MUAC < 11.5cm is Severe Acute Malnutrition (SAM)
+    if muac < 11.5:
+        risk_level = "High Risk"
+    # MUAC between 11.5 and 12.5 is MAM
+    elif 11.5 <= muac < 12.5 and risk_level == "Low Risk":
+        risk_level = "Medium Risk"
+    
+    # BMI extreme checks
+    weight = payload.get("weight", 0)
+    height = payload.get("height", 0)
+    bmi = weight / ((height/100)**2) if height > 0 else 20
+    if bmi > 35 or bmi < 12:
+        risk_level = "High Risk"
+    
     # Rule-based logic
     if muac < 11.5:
         recommendations.append("CRITICAL: Severe Acute Malnutrition (SAM) protocol initiated")
@@ -438,21 +453,34 @@ def predict_deep_health_risk(payload: dict):
             model_type = "TensorFlow/Keras Neural Network"
         
         labels = ["Low Risk", "Medium Risk", "High Risk"]
+        final_prediction = labels[prediction_idx]
         
+        # Clinical Overrides (Safety Layer)
+        muac = features.get('muac', 15)
+        bmi = features.get('bmi', 18)
+        
+        if muac < 11.5:
+            final_prediction = "High Risk"
+        elif 11.5 <= muac < 12.5 and final_prediction == "Low Risk":
+            final_prediction = "Medium Risk"
+            
+        if bmi > 35 or bmi < 12:
+            final_prediction = "High Risk"
+
         recommendations = []
-        if labels[prediction_idx] == "High Risk":
+        if final_prediction == "High Risk":
             bmi = features.get('bmi', 0)
             if bmi > 25:
                 recommendations = ["CRITICAL: Verify data entry (Weight/Height anomaly)", "Screen for childhood obesity"]
             else:
                 recommendations = ["Immediate clinical audit", "Intensive nutrition intervention"]
-        elif labels[prediction_idx] == "Medium Risk":
+        elif final_prediction == "Medium Risk":
             recommendations = ["Bi-weekly monitoring", "Parent counseling"]
             
         return {
             "status": "success",
             "model": model_type,
-            "prediction": labels[prediction_idx],
+            "prediction": final_prediction,
             "confidence": round(confidence, 2),
             "recommendations": recommendations
         }
