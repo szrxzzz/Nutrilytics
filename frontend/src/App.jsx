@@ -14,6 +14,7 @@ import VaccinationTracker from './pages/VaccinationTracker';
 import Alerts from './pages/Alerts';
 import Reports from './pages/Reports';
 import ParentNotifications from './pages/ParentNotifications';
+import Settings from './pages/Settings';
 
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
@@ -57,6 +58,7 @@ function App() {
           <Route path="/alerts" element={<AppLayout><Alerts /></AppLayout>} />
           <Route path="/reports" element={<AppLayout><Reports /></AppLayout>} />
           <Route path="/notifications" element={<AppLayout><ParentNotifications /></AppLayout>} />
+          <Route path="/settings" element={<AppLayout><Settings /></AppLayout>} />
           
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

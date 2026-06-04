@@ -1,11 +1,17 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Sidebar.css';
 
 const Sidebar = () => {
   const location = useLocation();
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const menuItems = [
     { path: '/dashboard', icon: '📊', label: 'Dashboard' },
@@ -34,7 +40,7 @@ const Sidebar = () => {
         ))}
       </div>
       <div className="sidebar-footer">
-        <button className="logout-btn" onClick={logout}>
+        <button className="logout-btn" onClick={handleLogout}>
           <span className="sidebar-icon">🚪</span>
           <span className="sidebar-label">Logout</span>
         </button>

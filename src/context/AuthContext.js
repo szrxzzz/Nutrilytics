@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('nutrilytics_user');
+    // Redirect will be handled by PrivateRoute when user becomes null
   };
 
   const value = {

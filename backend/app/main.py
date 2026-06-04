@@ -192,10 +192,13 @@ def predict_risk(payload: dict, db: Session = Depends(get_db)):
     elif prediction == "Medium Risk":
         recommendation = "Schedule nutrition counseling"
         
-    # Save alert if risk detected
-    if prediction != "Low Risk":
+    # Save alert if risk detected and a specific child is being evaluated
+    if child_id and prediction != "Low Risk":
+        # Remove duplicate nutrition alerts for this child
+        db.query(models.Alert).filter(models.Alert.child_id == child_id, models.Alert.alert_type == "nutrition").delete()
+        
         alert = models.Alert(
-            child_id=child_id or "unknown",
+            child_id=child_id,
             alert_type="nutrition",
             severity=prediction.split()[0].lower(),
             message=f"Nutrition risk: {prediction}",

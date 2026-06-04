@@ -1,10 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 
 const Settings = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <div className="app-container">
@@ -52,7 +59,7 @@ const Settings = () => {
 
         <div className="card" style={{marginTop: '20px'}}>
           <h2 className="section-title">Account Actions</h2>
-          <button className="btn btn-danger" onClick={logout}>
+          <button className="btn btn-danger" onClick={handleLogout}>
             Logout
           </button>
         </div>
