@@ -1,5 +1,7 @@
 # Nutrilytics - Complete Anganwadi Monitoring System
 
+> **Deploy Online:** Want to host this application online for free? Read the step-by-step [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)!
+
 A comprehensive web-based application for Anganwadi Centres to manage child health monitoring, growth tracking, attendance, vaccinations, AI-based risk alerts, and parent notifications.
 
 ## Features

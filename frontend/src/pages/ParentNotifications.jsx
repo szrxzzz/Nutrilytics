@@ -4,6 +4,8 @@ import { MessageSquare, Send, CheckCircle2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import './ParentNotifications.css';
 
+import { API_URL } from '../config';
+
 const ParentNotifications = () => {
   const [children, setChildren] = useState([]);
   const [searchParams] = useSearchParams();
@@ -26,7 +28,7 @@ const ParentNotifications = () => {
 
   const fetchChildren = async () => {
     try {
-      const resp = await axios.get('http://localhost:8000/children');
+      const resp = await axios.get(`${API_URL}/children`);
       setChildren(resp.data);
     } catch (err) {
       console.error(err);
@@ -51,7 +53,7 @@ const ParentNotifications = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/send-sms', {
+      const response = await axios.post(`${API_URL}/send-sms`, {
         phone: childInfo.parent_phone,
         message: customMessage || messageTemplates[messageType]
       });

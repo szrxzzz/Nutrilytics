@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Syringe, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 import './VaccinationTracker.css';
 
+import { API_URL } from '../config';
+
 const VaccinationTracker = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const VaccinationTracker = () => {
 
     const loadData = async () => {
       try {
-        const resp = await axios.get('http://localhost:8000/children');
+        const resp = await axios.get(`${API_URL}/children`);
         const mockVaccines = [];
         resp.data.forEach(child => {
           mockVaccines.push({

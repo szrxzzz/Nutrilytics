@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import './ChildProfile.css';
 import AIInsightsPanel from '../components/AIInsightsPanel';
 import { useSync } from '../context/SyncContext';
+import { API_URL } from '../config';
 
 const ChildProfile = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const ChildProfile = () => {
     anomaly: "Consistent",
     deepRisk: "Calculating...",
     deepConfidence: 0,
+    nutritionAdvisor: null,
     recommendations: []
   });
 
@@ -31,7 +33,7 @@ const ChildProfile = () => {
 
   const fetchData = async () => {
     try {
-      const resp = await axios.get(`http://localhost:8000/children/${id}`);
+      const resp = await axios.get(`${API_URL}/children/${id}`);
       setChild(resp.data);
       setLoading(false);
       runPrediction();
@@ -45,21 +47,21 @@ const ChildProfile = () => {
     setPredicting(true);
     try {
       // 1. Basic Risk Prediction
-      const resp = await axios.post(`http://localhost:8000/predict-risk`, { child_id: id });
+      const resp = await axios.post(`${API_URL}/predict-risk`, { child_id: id });
       setRiskData(resp.data);
       
       // 2. Growth Forecast
-      const forecastResp = await axios.post(`http://localhost:8000/forecast-growth`, { child_id: id });
+      const forecastResp = await axios.post(`${API_URL}/forecast-growth`, { child_id: id });
       setForecastData(forecastResp.data);
 
       // 3. Rule Based
-      const rulesResp = await axios.post(`http://localhost:8000/evaluate-rules`, { child_id: id });
+      const rulesResp = await axios.post(`${API_URL}/evaluate-rules`, { child_id: id });
       setRuleAlerts(rulesResp.data.alerts);
 
       // 4. Extended AI Features
       const feat = resp.data.features;
       
-      const attendanceResp = await axios.post(`http://localhost:8000/predict-attendance-risk`, {
+      const attendanceResp = await axios.post(`${API_URL}/predict-attendance-risk`, {
         features: {
           attendance_pct: feat.attendance_pct,
           past_absence: 100 - feat.attendance_pct,
@@ -68,7 +70,7 @@ const ChildProfile = () => {
         }
       });
 
-      const vaccineResp = await axios.post(`http://localhost:8000/predict-vaccine-default`, {
+      const vaccineResp = await axios.post(`${API_URL}/predict-vaccine-default`, {
         features: {
           missed_vaccines: feat.missed_vaccines,
           attendance_pct: feat.attendance_pct,
@@ -76,7 +78,7 @@ const ChildProfile = () => {
         }
       });
 
-      const anomalyResp = await axios.post(`http://localhost:8000/detect-growth-anomaly`, {
+      const anomalyResp = await axios.post(`${API_URL}/detect-growth-anomaly`, {
         features: {
           age_months: feat.age_months,
           weight: feat.weight,
@@ -86,7 +88,7 @@ const ChildProfile = () => {
         }
       });
 
-      const deepResp = await axios.post(`http://localhost:8000/predict-deep-health-risk`, {
+      const deepResp = await axios.post(`${API_URL}/predict-deep-health-risk`, {
         features: {
           age_months: feat.age_months,
           gender: feat.gender,
@@ -103,7 +105,7 @@ const ChildProfile = () => {
         }
       });
 
-      const recResp = await axios.post(`http://localhost:8000/nutrition-recommendation`, {
+      const recResp = await axios.post(`${API_URL}/nutrition-recommendation`, {
         risk_level: resp.data.risk_label,
         muac: feat.muac,
         age_months: feat.age_months
@@ -115,6 +117,7 @@ const ChildProfile = () => {
         anomaly: anomalyResp.data.prediction,
         deepRisk: deepResp.data.status === "success" ? deepResp.data.prediction : "Unavailable",
         deepConfidence: deepResp.data.status === "success" ? deepResp.data.confidence : 0,
+        nutritionAdvisor: recResp.data.advisor_data,
         recommendations: [...recResp.data.recommendations, ...(deepResp.data.recommendations || [])]
       });
 
@@ -162,16 +165,7 @@ const ChildProfile = () => {
           </button>
         </div>
 
-        <AIInsightsPanel 
-          dropoutRisk={extendedAI.attendance}
-          vaccineRisk={extendedAI.vaccine}
-          growthAnomaly={extendedAI.anomaly}
-          deepRisk={extendedAI.deepRisk}
-          deepConfidence={extendedAI.deepConfidence}
-          recommendations={extendedAI.recommendations}
-          loading={predicting}
-          isOnline={isOnline}
-        />
+        
       </div>
 
       <div className="profile-content-grid">

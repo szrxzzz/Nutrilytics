@@ -12,13 +12,14 @@ import requests
 app = FastAPI(title="Nutrilytics API")
 
 # Load ML Model
-MODEL_PATH = "backend/app/ml/model.pkl"
-LR_MODEL_PATH = "backend/app/ml/lr_model.pkl"
-ATTENDANCE_MODEL_PATH = "backend/app/ml/attendance_model.pkl"
-VACCINE_MODEL_PATH = "backend/app/ml/vaccine_model.pkl"
-ANOMALY_MODEL_PATH = "backend/app/ml/anomaly_model.pkl"
-DEEP_MODEL_PATH = "backend/app/ml/deep_health_model.keras"
-DEEP_FALLBACK_PATH = "backend/app/ml/deep_health_model.pkl"
+BASE_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.path.join(BASE_DIR, "ml", "model.pkl")
+LR_MODEL_PATH = os.path.join(BASE_DIR, "ml", "lr_model.pkl")
+ATTENDANCE_MODEL_PATH = os.path.join(BASE_DIR, "ml", "attendance_model.pkl")
+VACCINE_MODEL_PATH = os.path.join(BASE_DIR, "ml", "vaccine_model.pkl")
+ANOMALY_MODEL_PATH = os.path.join(BASE_DIR, "ml", "anomaly_model.pkl")
+DEEP_MODEL_PATH = os.path.join(BASE_DIR, "ml", "deep_health_model.keras")
+DEEP_FALLBACK_PATH = os.path.join(BASE_DIR, "ml", "deep_health_model.pkl")
 
 model = None
 lr_model = None
@@ -70,6 +71,17 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup():
     models.init_db()
+    # Auto-seed database if empty (great for initial deployment)
+    try:
+        db = models.SessionLocal()
+        user_count = db.query(models.User).count()
+        if user_count == 0:
+            print("Database is empty. Seeding sample data...")
+            from .seed import seed_data
+            seed_data()
+        db.close()
+    except Exception as e:
+        print(f"Error seeding database on startup: {e}")
 
 # Dependency
 def get_db():
@@ -368,46 +380,60 @@ def nutrition_recommendation(payload: dict):
     muac = payload.get("muac", 13.5)
     age = payload.get("age_months", 24)
     
-    recommendations = []
-    
-    # ML Prediction-based
+    # Compute detailed recommendations
+    # Simple static rule‑based lists – can be expanded later
+    # Foods are chosen to be locally available, affordable, and protein/iron rich
+    protein_foods = ["Boiled eggs", "Milk", "Paneer", "Lentils (dal)", "Soybeans", "Groundnut chikki"]
+    iron_foods = ["Spinach", "Green leafy vegetables", "Methi", "Beetroot", "Fortified flour", "Ragi porridge"]
+    # Base recommendations per risk level
     if risk_level == "High Risk":
-        recommendations.append("Immediate referral to NRC (Nutrition Rehabilitation Centre)")
-        recommendations.append("Double dose of RUTF (Ready-to-Use Therapeutic Food)")
+        recommended_foods = ["Ragi porridge", "Boiled eggs", "Banana", "Groundnut chikki", "Spinach", "Milk"]
+        daily_plan = {
+            "Breakfast": ["Ragi porridge", "Banana"],
+            "Lunch": ["Rice", "Dal", "Spinach", "Milk"],
+            "Evening": ["Groundnut chikki"],
+            "Dinner": ["Rice", "Vegetable curry", "Milk"]
+        }
+        follow_up = "Reassessment within 7 days"
+        parent_advice = "Your child may not be gaining enough weight. Include protein‑rich foods such as eggs, milk, and groundnuts regularly. Please visit the Anganwadi centre for a follow‑up check."
     elif risk_level == "Medium Risk":
-        recommendations.append("Supplementary feeding program enrollment")
-        recommendations.append("Fortified food supplements provided daily")
-    
-    # Clinical Overrides (Safety Layer)
-    # MUAC < 11.5cm is Severe Acute Malnutrition (SAM)
-    if muac < 11.5:
-        risk_level = "High Risk"
-    # MUAC between 11.5 and 12.5 is MAM
-    elif 11.5 <= muac < 12.5 and risk_level == "Low Risk":
-        risk_level = "Medium Risk"
-    
-    # BMI extreme checks
-    weight = payload.get("weight", 0)
-    height = payload.get("height", 0)
-    bmi = weight / ((height/100)**2) if height > 0 else 20
-    if bmi > 35 or bmi < 12:
-        risk_level = "High Risk"
-    
-    # Rule-based logic
-    if muac < 11.5:
-        recommendations.append("CRITICAL: Severe Acute Malnutrition (SAM) protocol initiated")
-    elif muac < 12.5:
-        recommendations.append("Moderate Acute Malnutrition (MAM) monitoring")
-        
-    if age < 6:
-        recommendations.append("Exclusive breastfeeding advocacy")
-    elif age < 24:
-        recommendations.append("Complementary feeding with high protein-energy content")
-        
+        recommended_foods = ["Ragi porridge", "Lentils (dal)", "Seasonal fruits", "Green leafy veg", "Milk"]
+        daily_plan = {
+            "Breakfast": ["Ragi porridge", "Fruit"],
+            "Lunch": ["Rice", "Dal", "Vegetables", "Milk"],
+            "Evening": ["Fruit"],
+            "Dinner": ["Rice", "Vegetable curry", "Milk"]
+        }
+        follow_up = "Follow‑up within 14 days"
+        parent_advice = "Ensure balanced meals with protein sources like dal and milk. Monitor growth and visit the centre for routine check‑ups."
+    else:
+        # Low risk – maintain healthy diet
+        recommended_foods = ["Balanced diet with cereals, pulses, vegetables, fruits, and dairy"]
+        daily_plan = {
+            "Breakfast": ["Whole grain cereal", "Milk"],
+            "Lunch": ["Rice", "Dal", "Vegetables"],
+            "Evening": ["Fruit"],
+            "Dinner": ["Rice", "Vegetable curry", "Milk"]
+        }
+        follow_up = "Routine monitoring"
+        parent_advice = "Continue providing a balanced, varied diet and attend regular growth monitoring sessions."
+
+    # Combine generic lists for display
+    recommendations = {
+        "risk_level": risk_level,
+        "recommended_foods": recommended_foods,
+        "protein_foods": protein_foods,
+        "iron_foods": iron_foods,
+        "daily_meal_suggestions": daily_plan,
+        "follow_up_priority": follow_up,
+        "parent_advice": parent_advice
+    }
+
     return {
         "status": "success",
         "prediction": risk_level,
-        "recommendations": recommendations
+        "recommendations": recommendations,
+        "advisor_data": recommendations
     }
 
 @app.post("/predict-deep-health-risk")

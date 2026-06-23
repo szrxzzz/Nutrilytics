@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Search, Filter, ChevronRight, User, MapPin } from 'lucide-react';
 import './ChildList.css';
 
+import { API_URL } from '../config';
+
 const ChildList = () => {
   const [children, setChildren] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,7 +17,7 @@ const ChildList = () => {
 
   const fetchChildren = async () => {
     try {
-      const resp = await axios.get('http://localhost:8000/children');
+      const resp = await axios.get(`${API_URL}/children`);
       setChildren(resp.data);
       setLoading(false);
     } catch (err) {

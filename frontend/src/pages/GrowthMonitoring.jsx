@@ -4,6 +4,8 @@ import { useSync } from '../context/SyncContext';
 import { Activity, Beaker, Ruler, Save, RefreshCw, ShieldCheck, ChevronRight, Info } from 'lucide-react';
 import './GrowthMonitoring.css';
 
+import { API_URL } from '../config';
+
 const GrowthMonitoring = () => {
   const { addToSyncQueue, isOnline } = useSync();
   const [children, setChildren] = useState([]);
@@ -39,7 +41,7 @@ const GrowthMonitoring = () => {
 
   const fetchChildren = async () => {
     try {
-      const resp = await axios.get('http://localhost:8000/children');
+      const resp = await axios.get(`${API_URL}/children`);
       setChildren(resp.data);
       setLoading(false);
     } catch (err) {
@@ -52,7 +54,7 @@ const GrowthMonitoring = () => {
     if (!selectedChild || !formData.weight || !formData.height) return;
     
     try {
-      const resp = await axios.post('http://localhost:8000/predict-risk', {
+      const resp = await axios.post(`${API_URL}/predict-risk`, {
         features: {
           age_months: 24, // Simplified for demo
           gender: 0,

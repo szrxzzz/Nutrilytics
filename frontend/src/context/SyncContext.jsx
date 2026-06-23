@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const SyncContext = createContext();
 
-const API_URL = 'http://localhost:8000';
+import { API_URL } from '../config';
 
 export const SyncProvider = ({ children }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);

@@ -4,6 +4,8 @@ import { Bell, ShieldAlert, AlertTriangle, CheckCircle2, Calendar, ArrowRight, A
 import { Link } from 'react-router-dom';
 import './Alerts.css';
 
+import { API_URL } from '../config';
+
 const Alerts = () => {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const Alerts = () => {
 
   const fetchAlerts = async () => {
     try {
-      const resp = await axios.get('http://localhost:8000/alerts');
+      const resp = await axios.get(`${API_URL}/alerts`);
       setAlerts(resp.data);
       setLoading(false);
     } catch (err) {

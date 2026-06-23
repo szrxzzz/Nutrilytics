@@ -4,6 +4,8 @@ import { Calendar, CheckCircle2, XCircle, Search, Filter, Save, Users } from 'lu
 import { useSync } from '../context/SyncContext';
 import './Attendance.css';
 
+import { API_URL } from '../config';
+
 const Attendance = () => {
   const { isOnline, addToSyncQueue } = useSync();
   const [children, setChildren] = useState([]);
@@ -19,7 +21,7 @@ const Attendance = () => {
 
   const fetchChildren = async () => {
     try {
-      const resp = await axios.get('http://localhost:8000/children');
+      const resp = await axios.get(`${API_URL}/children`);
       setChildren(resp.data);
       
       // Initialize attendance state (all present by default for demo)

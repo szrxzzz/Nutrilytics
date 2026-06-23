@@ -5,6 +5,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import './Dashboard.css';
 import AIInsightsPanel from '../components/AIInsightsPanel';
 import { useSync } from '../context/SyncContext';
+import { API_URL } from '../config';
+
 const Dashboard = () => {
   const { isOnline } = useSync();
   const [stats, setStats] = useState({
@@ -46,10 +48,10 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const resp = await axios.get('http://localhost:8000/children');
+      const resp = await axios.get(`${API_URL}/children`);
       const children = resp.data;
       
-      const alertsResp = await axios.get('http://localhost:8000/alerts');
+      const alertsResp = await axios.get(`${API_URL}/alerts`);
       const alerts = alertsResp.data;
 
       setStats({

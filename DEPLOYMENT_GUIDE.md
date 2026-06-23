@@ -39,6 +39,46 @@
 - ✅ Navigation system
 - ✅ Context-based state management
 
+## 🌍 Production Cloud Deployment (Free Tier)
+
+You can deploy the Nutrilytics application online for free so everyone can access it. Since the stack consists of a React frontend and a FastAPI backend, we use two separate free-tier services.
+
+### 1. Backend Deployment (Render - Free)
+Render is a cloud platform that allows hosting Dockerized Python apps for free:
+1. Go to [Render](https://render.com) and log in using your GitHub account.
+2. Click **New > Web Service**.
+3. Under *Connect a repository*, choose the `Nutrilytics` repository.
+4. Configure the Web Service settings:
+   - **Name**: `nutrilytics-api`
+   - **Root Directory**: `backend`
+   - **Runtime**: `Docker` (our `Dockerfile` inside the `backend` folder will build and run automatically)
+   - **Instance Type**: `Free`
+5. Click **Create Web Service**.
+6. Wait for the deployment to finish. Once done, copy your backend URL (e.g., `https://nutrilytics-api.onrender.com`).
+
+*Note: Render's free tier spins down after 15 minutes of inactivity. When someone first visits the site, it may take ~50 seconds for the backend to spin back up.*
+
+---
+
+### 2. Frontend Deployment (Netlify - Free)
+Netlify hosts React SPAs on a global CDN for free:
+1. Go to [Netlify](https://netlify.com) and log in with your GitHub account.
+2. Click **Add new site > Import from Git**.
+3. Select your git provider and choose the `Nutrilytics` repository.
+4. Configure the build settings:
+   - **Base directory**: `frontend`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `frontend/dist`
+5. Click **Add environment variables > New variable**:
+   - **Key**: `VITE_API_URL`
+   - **Value**: `https://nutrilytics-api.onrender.com` (paste your Render backend URL from step 1)
+6. Click **Deploy site**.
+7. Once deployed, Netlify will assign a free URL (e.g., `https://nutrilytics.netlify.app`).
+
+*Note: The `netlify.toml` file we configured in the `frontend` folder handles all frontend routing (SPA redirect rules) automatically, preventing 404 errors on refreshes.*
+
+---
+
 ## 🚀 Current Status
 
 ### Running Services
